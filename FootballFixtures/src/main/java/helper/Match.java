@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Match 
 {
-	private String teamA;
-	private String teamB;
+	private Team teamA;
+	private Team teamB;
 	private Date matchDate;
 	private String matchLocation;
 	
@@ -15,7 +15,7 @@ public class Match
 	 * @param matchDate
 	 * @param matchLocation
 	 */
-	public Match(String teamA, String teamB, Date matchDate, String matchLocation) {
+	public Match(Team teamA, Team teamB, Date matchDate, String matchLocation) {
 		super();
 		this.teamA = teamA;
 		this.teamB = teamB;
@@ -26,28 +26,28 @@ public class Match
 	/**
 	 * @return the teamA
 	 */
-	public String getTeamA() {
+	public Team getTeamA() {
 		return teamA;
 	}
 
 	/**
 	 * @param teamA the teamA to set
 	 */
-	public void setTeamA(String teamA) {
+	public void setTeamA(Team teamA) {
 		this.teamA = teamA;
 	}
 
 	/**
 	 * @return the teamB
 	 */
-	public String getTeamB() {
+	public Team getTeamB() {
 		return teamB;
 	}
 
 	/**
 	 * @param teamB the teamB to set
 	 */
-	public void setTeamB(String teamB) {
+	public void setTeamB(Team teamB) {
 		this.teamB = teamB;
 	}
 
@@ -78,6 +78,12 @@ public class Match
 	public void setMatchLocation(String matchLocation) {
 		this.matchLocation = matchLocation;
 	}
+	
+	
+	
+	
+	
+
 
 	
 	

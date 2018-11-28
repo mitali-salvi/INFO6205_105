@@ -11,7 +11,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
-import main.java.helper.VenueDistance;
+import main.java.helper.Team;
+
 
 /**
  * @author aditi
@@ -25,21 +26,17 @@ public class Configuration {
 		addTeamNames();
 		addLocations();
 		addDates();
-		addDistanceBetweenVenues();
+//		addDistanceBetweenVenues();
 	}
 	
-	private static void addDistanceBetweenVenues() 
-	{
-		ArrayList<String> teams = (ArrayList<String>) FootballData.getTeams();
-	    for (int i = 0; i < teams.size(); i++) 
-        {
-            for (int j = i + 1; j < teams.size(); j++)
-            {
-            	FootballData.distanceBetweenVenues.add(new VenueDistance(teams.get(i), teams.get(j), 
-            			ThreadLocalRandom.current().nextInt(100, 250 + 1)));
-            }
-        }
-	}
+//	private static void addDistanceBetweenVenues() 
+//	{
+//		ArrayList<String> teams = (ArrayList<String>) FootballData.getTeams();
+//        FootballData.distanceBetweenVenues.add(new VenueDistance(teams.get(i), teams.get(j), 
+//            			ThreadLocalRandom.current().nextInt(100, 250 + 1)));
+//
+//        }
+//	}
 
 	private static void addDates() {
 		
@@ -69,15 +66,16 @@ public class Configuration {
         
 	}
 
-	public static void addTeamNames(){
-		FootballData.teams.add("Manchester City");
-		FootballData.teams.add("Liverpool");
-		FootballData.teams.add("Tottenham Hotspur");
-		FootballData.teams.add("Chelsea");
-		FootballData.teams.add("Arsenal");
-		FootballData.teams.add("Everton");
-		FootballData.teams.add("Manchester United");
-		FootballData.teams.add("Watford");
+	public static void addTeamNames()
+	{
+		FootballData.teams.add(new Team("Manchester City","Etihad stadium"));
+		FootballData.teams.add(new Team("Liverpool","Anfield"));
+		FootballData.teams.add(new Team("Tottenham Hotspur","Wembley stadium"));
+		FootballData.teams.add(new Team("Chelsea","Stamford stadium"));
+		FootballData.teams.add(new Team("Arsenal","Emirates stadium"));
+		FootballData.teams.add(new Team("Everton","Goodison park"));
+		FootballData.teams.add(new Team("Manchester United", "Old Trafford"));
+		FootballData.teams.add(new Team("Watford","Vicarage Road"));
 	}
 	
 	public static void addLocations(){
