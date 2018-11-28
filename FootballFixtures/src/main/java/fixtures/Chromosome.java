@@ -26,10 +26,10 @@ public class Chromosome
 		Random random = new Random();
 	    for (int i = 0; i < size(); i++) 
         {
-             matches[i] = new Match(FootballData.getTeams().get(random.nextInt(FootballData.getTeams().size()+1)),
-                		FootballData.getTeams().get(random.nextInt(FootballData.getTeams().size()+1)),
-                		FootballData.getDates().get(random.nextInt(FootballData.getDates().size()+1)), 
-                		FootballData.getLocations().get(random.nextInt(FootballData.getLocations().size()+1))) ;
+             matches[i] = new Match(FootballData.getTeams().get(random.nextInt(FootballData.getTeams().size())),
+                		FootballData.getTeams().get(random.nextInt(FootballData.getTeams().size())),
+                		FootballData.getDates().get(random.nextInt(FootballData.getDates().size())), 
+                		FootballData.getLocations().get(random.nextInt(FootballData.getLocations().size()))) ;
         }
 	 }
 	
