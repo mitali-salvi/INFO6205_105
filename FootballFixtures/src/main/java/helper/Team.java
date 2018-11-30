@@ -50,6 +50,16 @@ public class Team
 	public void setHomeStadium(String homeStadium) {
 		this.homeStadium = homeStadium;
 	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Team [teamName=" + teamName + ", homeStadium=" + homeStadium + "]";
+	}
+	
 	
 	
 	

@@ -71,22 +71,22 @@ public class Configuration {
 		FootballData.teams.add(new Team("Manchester City","Etihad stadium"));
 		FootballData.teams.add(new Team("Liverpool","Anfield"));
 		FootballData.teams.add(new Team("Tottenham Hotspur","Wembley stadium"));
-		FootballData.teams.add(new Team("Chelsea","Stamford stadium"));
-		FootballData.teams.add(new Team("Arsenal","Emirates stadium"));
-		FootballData.teams.add(new Team("Everton","Goodison park"));
-		FootballData.teams.add(new Team("Manchester United", "Old Trafford"));
-		FootballData.teams.add(new Team("Watford","Vicarage Road"));
+//		FootballData.teams.add(new Team("Chelsea","Stamford stadium"));
+//		FootballData.teams.add(new Team("Arsenal","Emirates stadium"));
+//		FootballData.teams.add(new Team("Everton","Goodison park"));
+//		FootballData.teams.add(new Team("Manchester United", "Old Trafford"));
+//		FootballData.teams.add(new Team("Watford","Vicarage Road"));
 	}
 	
 	public static void addLocations(){
 		FootballData.locations.add("Etihad stadium");
 		FootballData.locations.add("Anfield");
 		FootballData.locations.add("Wembley stadium");
-		FootballData.locations.add("Stamford stadium");
-		FootballData.locations.add("Emirates stadium");
-		FootballData.locations.add("Goodison park");
-		FootballData.locations.add("Old Trafford");
-		FootballData.locations.add("Vicarage Road");
+//		FootballData.locations.add("Stamford stadium");
+//		FootballData.locations.add("Emirates stadium");
+//		FootballData.locations.add("Goodison park");
+//		FootballData.locations.add("Old Trafford");
+//		FootballData.locations.add("Vicarage Road");
 	}
 	
 	

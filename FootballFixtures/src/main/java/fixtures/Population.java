@@ -19,8 +19,18 @@ public class Population
 	    {
 	        Chromosome newIndividual = new Chromosome();
 	        chromosomes[i]= newIndividual;
-	      }
+	        System.out.println("***************");
+	    }
 	}
+
+	/**
+	 * @return the chromosomes
+	 */
+	public Chromosome[] getChromosomes() {
+		return chromosomes;
+	}
+	
+	
 	
 
 

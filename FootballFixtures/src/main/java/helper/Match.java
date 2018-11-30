@@ -78,6 +78,17 @@ public class Match
 	public void setMatchLocation(String matchLocation) {
 		this.matchLocation = matchLocation;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Match [teamA=" + teamA.toString() + ", teamB=" + teamB.toString() + ", matchDate=" + matchDate + ", matchLocation="
+				+ matchLocation + "]";
+	}
+	
+	
 	
 	
 	
