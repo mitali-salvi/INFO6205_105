@@ -19,7 +19,7 @@ public class Population
 	    {
 	        Chromosome newIndividual = new Chromosome();
 	        chromosomes[i]= newIndividual;
-	        System.out.println("***************");
+	        //System.out.println("***************");
 	    }
 	}
 

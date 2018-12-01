@@ -13,8 +13,6 @@ public class Team
 	private String homeStadium = "";
 	
 	
-	
-	
 	/**
 	 * @param teamName
 	 * @param homeStadium
@@ -59,6 +57,8 @@ public class Team
 	public String toString() {
 		return "Team [teamName=" + teamName + ", homeStadium=" + homeStadium + "]";
 	}
+	
+
 	
 	
 	
