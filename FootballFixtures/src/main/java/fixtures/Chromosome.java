@@ -49,6 +49,22 @@ public class Chromosome
 	 {
 		    return matches.length;
 	 }
+	 
+	 
+	 
+	 public Match[] getMatch()
+	 {
+		 return matches;
+	 }
+	 
+	 public void  SetMatch(Match [] matches)
+	 {  System.arraycopy(matches, 0, matches, 0, this.size());
+		 
+	 }
+	 
+	 
+	 
+	 
 
 	public void getFittnessFactor(){
 		
