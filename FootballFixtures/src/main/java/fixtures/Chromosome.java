@@ -21,10 +21,11 @@ import main.java.helper.Team;
 public class Chromosome implements Comparable<Chromosome>
 {
 	private double fitness =0.0;
-	private Match[] matches =new Match[((FootballData.getTeams().size()) * (FootballData.getTeams().size()-1))/2 * Constants.NUMBER_OF_ROUNDS];
+	private Match[] matches;
 	
 	public Chromosome ()
 	{
+		matches = new Match[((FootballData.getTeams().size()) * (FootballData.getTeams().size()-1))/2 * Constants.NUMBER_OF_ROUNDS];
 		generateChromosome();
 		calculateFitness();
 	}

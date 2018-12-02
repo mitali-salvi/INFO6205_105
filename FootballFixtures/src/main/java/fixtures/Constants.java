@@ -20,5 +20,7 @@ public class Constants
 	public static final double MUTATION_FACTOR = 0.05;
 	
 	public static final double CROSSOVER_RATE = 0.5;
+	
+	public static final int MAX_GENERATION = 100;
 
 }
