@@ -1,8 +1,5 @@
 package main.java.fixtures;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 import main.java.helper.Match;
 
 public class FixturesMain {
@@ -18,37 +15,41 @@ public class FixturesMain {
 		Population initialPopulation = new Population(Constants.POPULATION_SIZE);	
 		
 		int maxGeneration = Constants.MAX_GENERATION;
+		System.out.println("Starting GA");
 		
 		do {
-			System.out.println("Max generation: "+maxGeneration);
+			//System.out.println("current generation: "+maxGeneration);
 			initialPopulation = GeneticAlgorithm.runGeneticAlgorithm(initialPopulation);
 			maxGeneration--;
 			if(GeneticAlgorithm.flag)
+			{
+				System.out.println("Breaking while loop");
 				break;
-		}
-		while(maxGeneration >=0);
+			}
+
+		}while(maxGeneration >=0);
+		
+		
 		System.out.println("Out of loop");
+		//System.out.println(initialPopulation);
+		//System.out.println("length::"+initialPopulation.getChromosomes().length);
 		
 		
 		Chromosome[] temp = initialPopulation.getChromosomes();
         for (int i=0;i<temp.length;i++)
         {
-
+        	if (temp[i].getFitness() ==1.0)
+        	{
                 Match[] h =temp[i].getMatches();
                 for (int j=0;j<h.length; j++)
                 {
                     System.out.println(h[j]);
                 }
-
+                break;
+        	}
         }
-        System.out.println("Done(((((((((((((((((((9");
-//		Chromosome temp[] = initialPopulation.getChromosomes();
-//		for (int i=0;i<temp.length;i++)
-//		{
-//			System.out.println(temp[i] +"fitness::::"+temp[i].getFitness());
-//		}
-		
-		//call k 
+        System.out.println("Done implementing GA");
+
 
 	}
 

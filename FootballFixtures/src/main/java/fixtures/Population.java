@@ -30,6 +30,14 @@ public class Population
 		return chromosomes;
 	}
 	
+
+	/**
+	 * @param chromosomes the chromosomes to set
+	 */
+	public void setChromosomes(Chromosome[] chromosomes) {
+		this.chromosomes = chromosomes;
+	}
+	
 	
 	
 
