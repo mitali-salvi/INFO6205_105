@@ -26,12 +26,28 @@ public class GeneticAlgorithm
 	 */
 	static HashMap<Integer, Chromosome> parents = new HashMap<Integer, Chromosome>();
 	
-	public static Population runGeneticAlgorithm(Population initialPopulation){
+	public static Population runGeneticAlgorithm(Population initialPopulation)
+	{
+
 		
 		/**
 		 * Sort the initial population on the basis of fitness factor
 		 */
 		Population population = sortPopulation(initialPopulation);
+		
+		Chromosome[] chromosomes = population.getChromosomes();
+		
+		for(int i = 0; i < chromosomes.length; i++)
+		{
+			if(chromosomes[i].getFitness() == 1.0)
+			{
+				System.out.println("Setting flag as true");
+				flag = true;
+				return initialPopulation;
+			}
+			
+		}
+		
 		
 		/**
 		 * find first parent by using k-way tournament selection  
@@ -43,7 +59,7 @@ public class GeneticAlgorithm
 		 */
 		Chromosome parent_2 = null;
 		
-		Chromosome[] chromosomes = population.getChromosomes();
+		
 		
 		while(parents.size() < 2){
 			parent_2 = k_wayParentSelection(population);
@@ -67,50 +83,78 @@ public class GeneticAlgorithm
 		}
 		
 		parents.clear();
-		
-		for(int i = 0; i < chromosomes.length; i++){
-			if(chromosomes[i].getFitness() == 1.0){
-				flag = true;
-				break;
-			}
-			
-		}
+				
+		population.setChromosomes(chromosomes);
+		//System.out.println("Returning population");
 		return population;
 	}
 	
 	public static Chromosome[] crossOver(Chromosome p1, Chromosome p2) 
-	{
+	{	
+		Match[] parentOneMatches = p1.getMatches();
+		ArrayList<Match> parentOneMatchesAL = new ArrayList<Match>();
+		for (int i=0;i>parentOneMatches.length;i++)
+		{
+			parentOneMatchesAL.add(parentOneMatches[i]);
+		}
+		
+		
+		Match[] parentTwoMatches = p2.getMatches();
+		ArrayList<Match> parentTwoMatchesAL = new ArrayList<Match>();
+		for (int i=0;i>parentTwoMatches.length;i++)
+		{
+			parentTwoMatchesAL.add(parentTwoMatches[i]);
+		}
+		
 		int minimumIndex = 0;
 		int maximumIndex = p1.size();
-		
 		int crossOverPoint = (int) Math.random() * (maximumIndex - minimumIndex);
 		
-		Chromosome c1 = new Chromosome(); // child1 is created
-		Chromosome c2 = new Chromosome(); // child2 is created
 		
-	    Match[] childMatchArray1 = (Match[]) Array.newInstance(p1.getMatches().getClass().getComponentType(), p1.size());
-	    System.arraycopy(p1.getMatches(), 0, childMatchArray1, 0, crossOverPoint);
-	    System.arraycopy(p2.getMatches(), crossOverPoint + 1, childMatchArray1, crossOverPoint + 1, p1.size()-1);
 		
-	    Match[] childMatchArray2 = (Match[]) Array.newInstance(c1.getMatches().getClass().getComponentType(), c1.size());
-	    System.arraycopy(p2.getMatches(), 0, childMatchArray2, 0, crossOverPoint);
-		System.arraycopy(p1.getMatches(), crossOverPoint + 1, childMatchArray2, crossOverPoint + 1, p1.size()-1);
+		//child 1
+		ArrayList<Match> childOneMatchesAL = new ArrayList<Match>();
+		for (int i=0;i<crossOverPoint;i++)
+		{
+			childOneMatchesAL.add(parentOneMatchesAL.get(i));
+		}
+		for (int i=crossOverPoint+1;i<parentTwoMatchesAL.size();i++)
+		{
+			childOneMatchesAL.add(parentTwoMatchesAL.get(i));
+		}
+		Match[] childOne = new Match[childOneMatchesAL.size()];
+		for (int i=0;i<childOneMatchesAL.size();i++)
+		{
+			childOne[i] = childOneMatchesAL.get(i);
+		}
+		Chromosome child1 = new Chromosome(childOne);
 		
-		c1.setMatches(childMatchArray1);
-		c2.setMatches(childMatchArray2);
-		System.out.println("size::"+c1.size());
 		
-//		c1.calculateFitness();
-//		c2.calculateFitness(); 
+		//child 2
+		ArrayList<Match> childTwoMatchesAL = new ArrayList<Match>();
+		for (int i=0;i<crossOverPoint;i++)
+		{
+			childTwoMatchesAL.add(parentTwoMatchesAL.get(i));
+		}
+		for (int i=crossOverPoint+1;i<parentOneMatchesAL.size();i++)
+		{
+			childTwoMatchesAL.add(parentOneMatchesAL.get(i));
+		}
+		Match[] childTwo = new Match[childTwoMatchesAL.size()];
+		for (int i=0;i<childTwoMatchesAL.size();i++)
+		{
+			childTwo[i] = childTwoMatchesAL.get(i);
+		}
+		Chromosome child2 = new Chromosome(childTwo);
 		
-		Chromosome[] children = {c1, c2};
-		return children;
+		Chromosome[] setOfChildren = new Chromosome[]{child1, child2};
+		return setOfChildren;
+		
 	}
 	
 	public static Chromosome mutate (Chromosome c)
 	{
 		int numberOfMatchesToChange = (int)Constants.MUTATION_FACTOR * c.size();
-		//Random random = new Random();
 		Match[] matchesPlayed = c.getMatches();
 		
 		while (numberOfMatchesToChange !=0)
@@ -174,8 +218,10 @@ public class GeneticAlgorithm
 			return parentChromo;	
 	}
 
-	private static Population sortPopulation(Population initialPopulation) {
-		Arrays.sort(initialPopulation.getChromosomes(), new Comparator<Chromosome>() {
+	private static Population sortPopulation(Population initialPopulation) 
+	{
+		Arrays.sort(initialPopulation.getChromosomes(), new Comparator<Chromosome>() 
+		{
 	        public int compare(Chromosome o1, Chromosome o2) {
 	            return o1.compareTo(o2);
 	        }

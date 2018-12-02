@@ -30,6 +30,12 @@ public class Chromosome implements Comparable<Chromosome>
 		calculateFitness();
 	}
 	
+	public Chromosome (Match[] matches)
+	{
+		setMatches(matches);
+		calculateFitness();
+	}
+	
 	private void generateChromosome() 
 	{
 		Random random = new Random();
@@ -40,6 +46,7 @@ public class Chromosome implements Comparable<Chromosome>
                 		FootballData.getDates().get(random.nextInt(FootballData.getDates().size())), 
                 		FootballData.getLocations().get(random.nextInt(FootballData.getLocations().size()))) ;
              //System.out.println("-"+matches[i]);
+             //System.out.println();
         }
 	 }
 	
@@ -297,7 +304,7 @@ public class Chromosome implements Comparable<Chromosome>
 	    	}
 	    }
 	    
-	    //System.out.println("Total conflicts for this chromosome::"+conflicts);
+	    //System.out.println("Total fitness for this chromosome::"+1/(double)(1+conflicts));
 	    setFitness(1/(double)(1+conflicts));
 
 		
