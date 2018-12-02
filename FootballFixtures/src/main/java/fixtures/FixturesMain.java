@@ -14,7 +14,7 @@ public class FixturesMain {
 		
 		//Initialize initial population and calculate and set fitness of each chromosome
 		Population initialPopulation = new Population(3);	
-		geneticAlgo.runGeneticAlgorithm(initialPopulation);
+		//geneticAlgo.runGeneticAlgorithm(initialPopulation);
 		
 		
 //		Chromosome temp[] = initialPopulation.getChromosomes();
