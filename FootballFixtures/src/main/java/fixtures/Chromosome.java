@@ -18,7 +18,7 @@ import main.java.helper.Team;
  * @author mitalisalvi
  *
  */
-public class Chromosome 
+public class Chromosome implements Comparable<Chromosome>
 {
 	private double fitness =0.0;
 	private Match[] matches =new Match[((FootballData.getTeams().size()) * (FootballData.getTeams().size()-1))/2 * Constants.NUMBER_OF_ROUNDS];
@@ -26,6 +26,7 @@ public class Chromosome
 	public Chromosome ()
 	{
 		generateChromosome();
+		calculateFitness();
 	}
 	
 	private void generateChromosome() 
@@ -342,5 +343,18 @@ public class Chromosome
 	 */
 	public Match[] getMatches() {
 		return matches;
-	} 
+	}
+
+	/**
+	 * @param matches the matches to set
+	 */
+	public void setMatches(Match[] matches) {
+		this.matches = matches;
+	}
+
+	@Override
+	public int compareTo(Chromosome o) {
+		return Double.compare(o.getFitness(), this.getFitness());
+	}
+
 }
