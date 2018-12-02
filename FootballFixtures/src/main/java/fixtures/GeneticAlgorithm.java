@@ -93,6 +93,7 @@ public class GeneticAlgorithm
 		return list.get(0);
 	}
 	
+	//added new method for deciding between child and parent chromo
 	public static Chromosome pushChromosomeBackInPop (Chromosome parentChromo, Chromosome childChromo)
 	{
 		if (Math.random() <= Constants.CROSSOVER_RATE)
