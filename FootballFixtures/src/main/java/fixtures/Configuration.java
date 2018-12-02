@@ -1,6 +1,3 @@
-/**
- * 
- */
 package main.java.fixtures;
 
 import java.text.ParseException;
