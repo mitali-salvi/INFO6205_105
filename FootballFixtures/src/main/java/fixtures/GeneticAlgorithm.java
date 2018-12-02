@@ -42,7 +42,7 @@ public class GeneticAlgorithm
 	public static Chromosome mutate (Chromosome c)
 	{
 		int numberOfMatchesToChange = (int)Constants.MUTATION_FACTOR * c.size();
-		Random random = new Random();
+//		Random random = new Random();
 		Match[] matchesPlayed = c.getMatches();
 		
 		while (numberOfMatchesToChange !=0)
@@ -56,10 +56,11 @@ public class GeneticAlgorithm
 			 numberOfMatchesToChange --;
 		}
 		c.setMatches(matchesPlayed);
+		c.calculateFitness();
 		return c;
 	}
   
-  static Random random = new Random();
+	private static Random random = new Random();
 	
 	public static Chromosome k_wayParentSelection(Population population){
 		//assuming population is sorted
@@ -79,7 +80,6 @@ public class GeneticAlgorithm
 			list.add(chromosomes[position]);
 		}
 		
-		
 		Collections.sort(list, new Comparator<Chromosome>() {
             @Override
             public int compare(Chromosome o1, Chromosome o2) {
@@ -91,5 +91,13 @@ public class GeneticAlgorithm
 		
 		//return highest fitness chromosome 
 		return list.get(0);
+	}
+	
+	public static Chromosome pushChromosomeBackInPop (Chromosome parentChromo, Chromosome childChromo)
+	{
+		if (Math.random() <= Constants.CROSSOVER_RATE)
+			return childChromo;
+		else 
+			return parentChromo;	
 	}
 }

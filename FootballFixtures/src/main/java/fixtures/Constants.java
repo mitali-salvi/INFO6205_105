@@ -18,5 +18,7 @@ public class Constants
 	public static final int K_FACTOR = 3;  //keep 5 for population 100
 	
 	public static final double MUTATION_FACTOR = 0.05;
+	
+	public static final double CROSSOVER_RATE = 0.5;
 
 }
