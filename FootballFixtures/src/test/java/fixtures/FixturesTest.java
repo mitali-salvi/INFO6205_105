@@ -9,7 +9,7 @@ public class FixturesTest
 {
 	public static void main(String[] args) 
 	{
-		System.out.println("Started");
+		/*System.out.println("Started");
 		Configuration.initializeData();
 		Population pop = new Population(1000000);
 		Chromosome[] temp = pop.getChromosomes();
@@ -26,7 +26,7 @@ public class FixturesTest
 				break;
 			}
 		}
-		System.out.println("Done");
+		System.out.println("Done");*/
 	}
 
 }
