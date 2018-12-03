@@ -23,6 +23,15 @@ public class Population
 	    }
 	}
 
+	
+	public Population(Chromosome[] chromosomes , int populationSize)
+	{
+		this.chromosomes = new Chromosome[populationSize];
+		System.arraycopy(chromosomes, 0, this.chromosomes, 0, chromosomes.length);
+	}
+
+	
+	
 	/**
 	 * @return the chromosomes
 	 */

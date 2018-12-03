@@ -9,24 +9,24 @@ public class FixturesTest
 {
 	public static void main(String[] args) 
 	{
-		/*System.out.println("Started");
-		Configuration.initializeData();
-		Population pop = new Population(1000000);
-		Chromosome[] temp = pop.getChromosomes();
-		for (int i=0;i<temp.length;i++)
-		{
-			temp[i].calculateFitness();
-			if (temp[i].getFitness() ==1.0)
-			{
-				Match[] h =temp[i].getMatches();
-				for (int j=0;j<h.length; j++)
-				{
-					System.out.println(h[j]);
-				}
-				break;
-			}
-		}
-		System.out.println("Done");*/
+//		System.out.println("Started");
+//		Configuration.initializeData();
+//		Population pop = new Population(100000);
+//		Chromosome[] temp = pop.getChromosomes();
+//		for (int i=0;i<temp.length;i++)
+//		{
+//			System.out.println("f:"+temp[i].getFitness());
+//			if (temp[i].getFitness() ==1.00)
+//			{
+//				Match[] h =temp[i].getMatches();
+//				for (int j=0;j<h.length; j++)
+//				{
+//					System.out.println(h[j]);
+//				}
+//				break;
+//			}
+//		}
+//		System.out.println("Done");
 	}
 
 }
