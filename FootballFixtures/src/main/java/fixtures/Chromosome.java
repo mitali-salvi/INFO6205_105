@@ -62,16 +62,16 @@ public class Chromosome implements Comparable<Chromosome> {
 		 int conflicts = 0;
 		 HashMap<Team, Integer> matchesPlayed = new HashMap<Team, Integer>();
 		
-//		 //each team will play NumberOfRounds(2) against EACH team
-//		 HashMap<String, ArrayList<Team>> hashMapOfTeamAndOpponentCount = new HashMap<String, ArrayList<Team>>();
-//		 for (Team t :FootballData.getTeams()) {
-//			 hashMapOfTeamAndOpponentCount.put(t.getTeamName(), new ArrayList<Team>());
-//		 }
+		 //each team will play NumberOfRounds(2) against EACH team
+		 HashMap<String, ArrayList<Team>> hashMapOfTeamAndOpponentCount = new HashMap<String, ArrayList<Team>>();
+		 for (Team t :FootballData.getTeams()) {
+			 hashMapOfTeamAndOpponentCount.put(t.getTeamName(), new ArrayList<Team>());
+		 }
 		// Java 8
 		// Map<String, List<Student>> studlistGrouped = studlist.stream().collect(Collectors.groupingBy(w -> w.stud_location));
 		
 		
-		 //location hashMap - each location (home ground) will have list of all team which have played there
+		// location hashMap - each location (home ground) will have list of all team which have played there
 		 HashMap <String , HashMap<Team, Integer>> locationCount = new HashMap<String , HashMap<Team, Integer>>();
 		 for (String loc:FootballData.getLocations()) {
 			 locationCount.put(loc, new HashMap<Team,Integer>());
@@ -108,23 +108,23 @@ public class Chromosome implements Comparable<Chromosome> {
 		
 		
 		 //storing opponents of each team
-//		 for (Entry<String, ArrayList<Team>> entry : hashMapOfTeamAndOpponentCount.entrySet()) 
-//		 {
-//			 String team = entry.getKey();
-//			 if (team.equals(teamA.getTeamName())) {
-//				 ArrayList<Team> al = hashMapOfTeamAndOpponentCount.get(team);
-//				 al.add(teamB);
-//			 }
-//			
-//			 if (team.equals(teamB.getTeamName()) && !(teamA.equals(teamB)) ){
-//				 ArrayList<Team> al = hashMapOfTeamAndOpponentCount.get(team);
-//				 al.add(teamA);
-//			 }
-//		 }
+		 /*for (Entry<String, ArrayList<Team>> entry : hashMapOfTeamAndOpponentCount.entrySet()) 
+		 {
+			 String team = entry.getKey();
+			 if (team.equals(teamA.getTeamName())) {
+				 ArrayList<Team> al = hashMapOfTeamAndOpponentCount.get(team);
+				 al.add(teamB);
+			 }
+			
+			 if (team.equals(teamB.getTeamName()) && !(teamA.equals(teamB)) ){
+				 ArrayList<Team> al = hashMapOfTeamAndOpponentCount.get(team);
+				 al.add(teamA);
+			 }
+		 }*/
 		
 		
 		 //1. Team will not play with itself
-		 if(teamA == teamB){
+		 if(teamA.equals(teamB)){
 			 //System.out.println("Team will not play with itself");
 			 conflicts++;
 		 }
@@ -144,7 +144,7 @@ public class Chromosome implements Comparable<Chromosome> {
 		 //each team will play one match at home and one match at opponent ground
 		 //equivalent to each location will have 2 home ground matches and each other team will play one match each at that ground
 		 //here we assume 2 rounds
-		 String currentLocation = matchSchedule.getMatchLocation();
+		 /*String currentLocation = matchSchedule.getMatchLocation();
 		
 		 HashMap<Team,Integer> locHashMap =locationCount.get(currentLocation);
 		 //add to locHashMap if location is either teams home ground. If not then increase conflicts
@@ -163,7 +163,7 @@ public class Chromosome implements Comparable<Chromosome> {
 		 else{
 			 //System.out.println("location doesnt match either team home stadiums so increase conflicts");
 			 conflicts++;
-		 }
+		 }*/
 		
 		 ArrayList<Date> dateForTeamA = sameDateChecker.get(teamA);
 		 dateForTeamA.add(matchSchedule.getMatchDate());
@@ -177,8 +177,8 @@ public class Chromosome implements Comparable<Chromosome> {
 		 }
 		
 		
-//		 if (!matchSchedule.getMatchLocation().equals(teamA.getHomeStadium()) || !matchSchedule.getMatchLocation().equals(teamB.getHomeStadium()))
-//			 conflicts++;
+		 if (!matchSchedule.getMatchLocation().equals(teamA.getHomeStadium()) || !matchSchedule.getMatchLocation().equals(teamB.getHomeStadium()))
+			 conflicts++;
 		 
 		 
 		 }
@@ -188,7 +188,7 @@ public class Chromosome implements Comparable<Chromosome> {
 		 {
 			 boolean flag = containsDuplicates(entry.getValue());
 			 if (flag) {
-				 //System.out.println("more than 1 motch occurs on the same day for team::"+entry.getKey().getTeamName());
+				 //System.out.println("more than 1 match occurs on the same day for team::"+entry.getKey().getTeamName());
 				 conflicts++;
 			 }
 		
@@ -221,7 +221,7 @@ public class Chromosome implements Comparable<Chromosome> {
 		 for (Entry<Team, Integer> entry : matchesPlayed.entrySet())
 		 {
 			 int numberOfMatches = entry.getValue();
-			 if (numberOfMatches != ((FootballData.getTeams().size() - 1) * Constants.NUMBER_OF_ROUNDS))
+			 if (numberOfMatches != (FootballData.getTeams().size() * (FootballData.getTeams().size() - 1)))
 			 {
 				 //System.out.println(entry.getKey().getTeamName()+" is NOT playing -  "+(FootballData.getTeams().size() - 1) * Constants.NUMBER_OF_ROUNDS+" +"matches");
 				 conflicts++;
@@ -232,62 +232,62 @@ public class Chromosome implements Comparable<Chromosome> {
 		
 		 //System.out.println();
 		 //each team will play 2 (number of rounds) against every other team
-//		 for (Entry<String, ArrayList<Team>> entry : hashMapOfTeamAndOpponentCount.entrySet())
-//		 {
-//		 ArrayList<Team> temp = entry.getValue();
-//		 String team = entry.getKey();
-//		 HashMap <String, Integer> countOfMatchesPlayed = new HashMap<>();
-//		 for (Team t :temp)
-//		 {
-//		 if(countOfMatchesPlayed.containsKey(t.getTeamName()))
-//		 {
-//		 countOfMatchesPlayed.put(t.getTeamName(),
-//		 countOfMatchesPlayed.get(t.getTeamName()) + 1);
-//		 }
-//		 else{
-//		 countOfMatchesPlayed.put(t.getTeamName(), 1);
-//		 }
-//		 }
-//		 //System.out.println("Executing for:::"+team);
-//		 //System.out.println("countOfMatchesPlayed::"+countOfMatchesPlayed);
-//		 for (Entry<String, Integer> single : countOfMatchesPlayed.entrySet())
-//		 {
-//		 String opponentTeam = single.getKey();
-//		 int numberOfMatchesBetween = single.getValue();
-//		 if (team.equals(opponentTeam))
-//		 {
-//		 //System.out.println("Already taken care of in loop so ignore");
-//		 }
-//		 else
-//		 {
-//		 if (numberOfMatchesBetween != Constants.NUMBER_OF_ROUNDS)
-//		 {
-//		 //System.out.println("Two matches are not played between:"+team+" and "+opponentTeam);
-//		 conflicts++;
-//		 }
-//		 }
-//		 }
-//		
-//		 //checking if this team has played matches against EACH other team in the league
-//		 HashMap <String, Integer> copyOfCountOfMatchesPlayed = new
-//		 HashMap<>(countOfMatchesPlayed);
-//		 int counterOfOpponentTeam = 0;
-//		 for (Entry<String, Integer> single :
-//		 copyOfCountOfMatchesPlayed.entrySet())
-//		 {
-//		 String opponentTeam = single.getKey();
-//		 if (!team.equals(opponentTeam))
-//		 {
-//		 counterOfOpponentTeam ++;
-//		 }
-//		 }
-//		 //System.out.println("counterOfOpponentTeamL"+counterOfOpponentTeam);
-//		 if (counterOfOpponentTeam != FootballData.getTeams().size() -1)
-//		 {
-//		 //System.out.println("After removing own entry count is less");
-//		 conflicts++;
-//		 }
-//		 }
+		 /*for (Entry<String, ArrayList<Team>> entry : hashMapOfTeamAndOpponentCount.entrySet())
+		 {
+			 ArrayList<Team> temp = entry.getValue();
+			 String team = entry.getKey();
+			 HashMap <String, Integer> countOfMatchesPlayed = new HashMap<>();
+			 for (Team t :temp)
+			 {
+			 if(countOfMatchesPlayed.containsKey(t.getTeamName()))
+			 {
+			 countOfMatchesPlayed.put(t.getTeamName(),
+			 countOfMatchesPlayed.get(t.getTeamName()) + 1);
+			 }
+			 else{
+			 countOfMatchesPlayed.put(t.getTeamName(), 1);
+			 }
+			 }
+			 //System.out.println("Executing for:::"+team);
+			 //System.out.println("countOfMatchesPlayed::"+countOfMatchesPlayed);
+			 for (Entry<String, Integer> single : countOfMatchesPlayed.entrySet())
+			 {
+			 String opponentTeam = single.getKey();
+			 int numberOfMatchesBetween = single.getValue();
+			 if (team.equals(opponentTeam))
+			 {
+			 //System.out.println("Already taken care of in loop so ignore");
+			 }
+			 else
+			 {
+			 if (numberOfMatchesBetween != Constants.NUMBER_OF_ROUNDS)
+			 {
+			 //System.out.println("Two matches are not played between:"+team+" and "+opponentTeam);
+			 conflicts++;
+			 }
+			 }
+			 }
+	//		
+			 //checking if this team has played matches against EACH other team in the league
+			 HashMap <String, Integer> copyOfCountOfMatchesPlayed = new
+			 HashMap<>(countOfMatchesPlayed);
+			 int counterOfOpponentTeam = 0;
+			 for (Entry<String, Integer> single :
+			 copyOfCountOfMatchesPlayed.entrySet())
+			 {
+			 String opponentTeam = single.getKey();
+			 if (!team.equals(opponentTeam))
+			 {
+			 counterOfOpponentTeam ++;
+			 }
+			 }
+			 //System.out.println("counterOfOpponentTeamL"+counterOfOpponentTeam);
+			 if (counterOfOpponentTeam != FootballData.getTeams().size() -1)
+			 {
+			 //System.out.println("After removing own entry count is less");
+			 conflicts++;
+			 }
+		 }*/
 		
 		 System.out.println("conflicts::"+conflicts);
 		 double fitness = 1/(double)(1+conflicts);
