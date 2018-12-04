@@ -9,7 +9,7 @@ package main.java.fixtures;
  */
 public class Constants 
 {
-	public static final int POPULATION_SIZE = 100000;
+	public static final int POPULATION_SIZE = 1000;
 	
 	public static final int NUMBER_OF_ROUNDS = 2; 
 	
@@ -21,6 +21,7 @@ public class Constants
 	
 	public static final double CROSSOVER_RATE = 0.8;
 	
-	public static final int MAX_GENERATION = 100;
+	public static final int MAX_GENERATION = 10000;
 
+	public static final int MAX_COLONY_SIZE = 500;
 }

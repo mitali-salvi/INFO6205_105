@@ -30,7 +30,14 @@ public class Population
 		System.arraycopy(chromosomes, 0, this.chromosomes, 0, chromosomes.length);
 	}
 
-	
+	public Population(Chromosome[] c1 , Chromosome[] c2)
+	{
+		int totalSize = c1.length + c2.length;
+		this.chromosomes = new Chromosome[totalSize];
+		
+		System.arraycopy(c1, 0, this.chromosomes, 0, c1.length);
+		System.arraycopy(c2, 0, this.chromosomes, c1.length, c2.length);
+	}
 	
 	/**
 	 * @return the chromosomes
