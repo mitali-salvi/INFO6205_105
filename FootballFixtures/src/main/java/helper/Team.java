@@ -1,11 +1,10 @@
-/**
- * 
- */
+
 package main.java.helper;
 
 /**
- * @author mitalisalvi
- *
+ * The class contains the basic layout of a team - which contains the team name and its home stadium
+ * 
+ * @author Aditi Jalkote, Mitali Salvi, Shubham Sharma
  */
 public class Team 
 {
@@ -55,7 +54,7 @@ public class Team
 	 */
 	@Override
 	public String toString() {
-		return "Team [teamName=" + teamName + ", homeStadium=" + homeStadium + "]";
+		return teamName;
 	}
 	
 

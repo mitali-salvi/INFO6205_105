@@ -1,6 +1,8 @@
 package test.java.fixtures;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -11,27 +13,28 @@ import org.junit.Test;
 
 import main.java.fixtures.Chromosome;
 import main.java.fixtures.FootballData;
+import main.java.fixtures.GeneticAlgorithm;
+
 import main.java.fixtures.Population;
 import main.java.helper.Match;
 import main.java.helper.Team;
 
 /**
- * The class contains test cases for Genetic Algorithm functions
+ * The class contains test cases for Genetic Algorithm function
  * 
  * @author Aditi Jalkote, Mitali Salvi, Shubham Sharma
  */
 
 public class FixturesTest 
 {
-	private FootballData footballData;
 	
 	/*
 	 * Initialize population by setting data
 	 */
 	@Before
-	public void setUp() throws Exception{
-		System.out.println("step 1");
-		
+	public void setUp() throws Exception
+	{		
+
 		String location_1 = "Etihad stadium";
 		String location_2 = "Anfield";
 		String location_3 = "Wembley stadium";
@@ -40,17 +43,16 @@ public class FixturesTest
 		Team team_2 = new Team("Liverpool","Anfield");
 		Team team_3 = new Team("Tottenham Hotspur","Wembley stadium");
 		
-		footballData = new FootballData();
+		FootballData.getLocations().clear();
+		FootballData.locations.add(location_1);
+		FootballData.locations.add(location_2);
+		FootballData.locations.add(location_3);
 		
-		footballData.getLocations().clear();
-		footballData.locations.add(location_1);
-		footballData.locations.add(location_2);
-		footballData.locations.add(location_3);
-		
-		footballData.getTeams().clear();
-		footballData.teams.add(team_1);
-		footballData.teams.add(team_2);
-		footballData.teams.add(team_3);
+		FootballData.getTeams().clear();
+		FootballData.teams.add(team_1);
+		FootballData.teams.add(team_2);
+		FootballData.teams.add(team_3);
+
 		
 		Date date_1 = new Date();
 		Date date_2 = new Date();
@@ -71,32 +73,89 @@ public class FixturesTest
 		} catch (Exception e){
 			System.out.println("Excepting for date parsing:" +e.getMessage());
 		}
+
+		FootballData.getDates().addAll(Arrays.asList(date_1, date_2, date_3,
+				date_4, date_5, date_6));
+	}
 		
+	/*
+	 * Test to check if fitness is 1.0 for the perfect fixture
+	 */
+	@Test
+	public void checkFitnessTest(){
+		
+		Team team_1 = FootballData.getTeams().get(0);
+		Team team_2 = FootballData.getTeams().get(1);
+		Team team_3 = FootballData.getTeams().get(2);
+		
+		String location_1 = FootballData.getLocations().get(0);
+		String location_2 = FootballData.getLocations().get(1);
+		String location_3 = FootballData.getLocations().get(2);
+		
+		Date date_1 = FootballData.getDates().get(0);
+		Date date_2 = FootballData.getDates().get(1);
+		Date date_3 = FootballData.getDates().get(2);
+		Date date_4 = FootballData.getDates().get(3);
+		Date date_5 = FootballData.getDates().get(4);
+		Date date_6 = FootballData.getDates().get(5);
+
 		footballData.getDates().addAll(Arrays.asList(date_1, date_2, date_3,
 				date_4, date_5, date_6));
 	}
-	
-	
+  
 	/*
-	 * Test to find fittest chromosome by using calculateFitness method
+	 * Test to check if conflicts arise for clashing fixtures
 	 */
 	@Test
-	public void findFitnessTest_1(){
+	public void checkConflictsTest(){
 		
-		Team team_1 = footballData.getTeams().get(0);
-		Team team_2 = footballData.getTeams().get(1);
-		Team team_3 = footballData.getTeams().get(2);
+		Team team_1 = FootballData.getTeams().get(0);
+		Team team_2 = FootballData.getTeams().get(1);
+		Team team_3 = FootballData.getTeams().get(2);
 		
-		String location_1 = footballData.getLocations().get(0);
-		String location_2 = footballData.getLocations().get(1);
-		String location_3 = footballData.getLocations().get(2);
+		String location_1 = FootballData.getLocations().get(0);
+		String location_2 = FootballData.getLocations().get(1);
+		String location_3 = FootballData.getLocations().get(2);
 		
-		Date date_1 = footballData.getDates().get(0);
-		Date date_2 = footballData.getDates().get(1);
-		Date date_3 = footballData.getDates().get(2);
-		Date date_4 = footballData.getDates().get(3);
-		Date date_5 = footballData.getDates().get(4);
-		Date date_6 = footballData.getDates().get(5);
+		Date date_1 = FootballData.getDates().get(0);
+		
+		Match match_1 = new Match(team_1, team_2, date_1, location_1);
+		Match match_2 = new Match(team_1, team_2, date_1, location_1);
+		Match match_3 = new Match(team_2, team_2, date_1, location_2);
+		Match match_4 = new Match(team_2, team_3, date_1, location_1);
+		Match match_5 = new Match(team_3, team_1, date_1, location_3);
+		Match match_6 = new Match(team_3, team_1, date_1, location_1);
+		
+		Match[] matches = {match_1, match_2, match_3, match_4, match_5, match_6};
+		Chromosome chromosome = new Chromosome(matches);
+		
+		double expectedFitness = 1.00;
+		chromosome.calculateFitness();
+		double calculatedFitness = chromosome.getFitness();
+		assertTrue(Double.compare(expectedFitness, calculatedFitness) !=0);
+		
+	}
+	
+	/*
+	 * Test to check if mutation takes place in a chromosome to generate a new chromosome
+	 */
+	@Test
+	public void checkMutationTest()
+	{
+		Team team_1 = FootballData.getTeams().get(0);
+		Team team_2 = FootballData.getTeams().get(1);
+		Team team_3 = FootballData.getTeams().get(2);
+		
+		String location_1 = FootballData.getLocations().get(0);
+		String location_2 = FootballData.getLocations().get(1);
+		String location_3 = FootballData.getLocations().get(2);
+		
+		Date date_1 = FootballData.getDates().get(0);
+		Date date_2 = FootballData.getDates().get(1);
+		Date date_3 = FootballData.getDates().get(2);
+		Date date_4 = FootballData.getDates().get(3);
+		Date date_5 = FootballData.getDates().get(4);
+		Date date_6 = FootballData.getDates().get(5);
 		
 		Match match_1 = new Match(team_1, team_2, date_1, location_1);
 		Match match_2 = new Match(team_1, team_3, date_2, location_1);
@@ -105,21 +164,149 @@ public class FixturesTest
 		Match match_5 = new Match(team_3, team_1, date_5, location_3);
 		Match match_6 = new Match(team_3, team_2, date_6, location_3);
 		
-		//Chromosome ch = 
-		//ch.
-		Population population = new Population(1);
-		//array chromosomes
-		Chromosome[] fixtures = population.getChromosomes();
-		Chromosome fixture = fixtures[0];
-		
 		Match[] matches = {match_1, match_2, match_3, match_4, match_5, match_6};
-		fixture.setMatches(matches);
+		Chromosome chromosomeToBeMutated = new Chromosome(matches);
+		Chromosome mutatedChromosome = GeneticAlgorithm.mutate(chromosomeToBeMutated);
 		
-		int expectedConflicts = 0;
-		double expectedFitness = (double) 1 / (1 + expectedConflicts);
-		fixture.calculateFitness();
-		assertEquals(expectedFitness, fixture.getFitness(), 0.001);
+		boolean flagForComparingMatches = false;
+		for (int i=0;i<mutatedChromosome.size();i++)
+		{
+			if (chromosomeToBeMutated.getMatches()[i].equals((mutatedChromosome.getMatches()[i])))
+			{
+				flagForComparingMatches = true;
+				break;
+			}	
+		}
+		
+		assertEquals(flagForComparingMatches , true);
 	}
 	
+	/*
+	 * Test to check if fittest chromosome is present at the top of the population
+	 */
+	@Test
+	public void checkFittestChromosomeTest ()
+	{
+		Team team_1 = FootballData.getTeams().get(0);
+		Team team_2 = FootballData.getTeams().get(1);
+		Team team_3 = FootballData.getTeams().get(2);
+		
+		String location_1 = FootballData.getLocations().get(0);
+		String location_2 = FootballData.getLocations().get(1);
+		String location_3 = FootballData.getLocations().get(2);
+		
+		Date date_1 = FootballData.getDates().get(0);
+		Date date_2 = FootballData.getDates().get(1);
+		Date date_3 = FootballData.getDates().get(2);
+		Date date_4 = FootballData.getDates().get(3);
+		Date date_5 = FootballData.getDates().get(4);
+		Date date_6 = FootballData.getDates().get(5);
+		
+		Match match_1 = new Match(team_1, team_2, date_1, location_1);
+		Match match_2 = new Match(team_1, team_3, date_2, location_1);
+		Match match_3 = new Match(team_2, team_1, date_3, location_2);
+		Match match_4 = new Match(team_2, team_3, date_4, location_2);
+		Match match_5 = new Match(team_3, team_1, date_5, location_3);
+		Match match_6 = new Match(team_3, team_2, date_6, location_3);
+		
+		Match[] matches = {match_1, match_2, match_3, match_4, match_5, match_6};
+		Chromosome chromosomeToBeAdded = new Chromosome(matches);
+		Chromosome[] chromosomeArray = new Chromosome[]{chromosomeToBeAdded};
+		
+		Population population = new Population(1);
+		population.setChromosomes(chromosomeArray);
+		
+		GeneticAlgorithm.sortPopulation(population); //sort in descending order
+		Chromosome firstChromosome = population.getChromosomes()[0];
+		
+		assertEquals(population.getChromosomes()[0], firstChromosome);
+	}
+	
+	/*
+	 * Test to check if cross over between 2 parents produces 2 children
+	 */
+	@Test
+	public void checkCrossOverTest()
+	{
+		Team team_1 = FootballData.getTeams().get(0);
+		Team team_2 = FootballData.getTeams().get(1);
+		Team team_3 = FootballData.getTeams().get(2);
+		
+		String location_1 = FootballData.getLocations().get(0);
+		String location_2 = FootballData.getLocations().get(1);
+		String location_3 = FootballData.getLocations().get(2);
+		
+		Date date_1 = FootballData.getDates().get(0);
+		Date date_2 = FootballData.getDates().get(1);
+		Date date_3 = FootballData.getDates().get(2);
+		Date date_4 = FootballData.getDates().get(3);
+		Date date_5 = FootballData.getDates().get(4);
+		Date date_6 = FootballData.getDates().get(5);
+		
+		Match match_1 = new Match(team_1, team_2, date_1, location_1);
+		Match match_2 = new Match(team_1, team_3, date_2, location_1);
+		Match match_3 = new Match(team_2, team_1, date_3, location_2);
+		Match match_4 = new Match(team_2, team_3, date_4, location_2);
+		Match match_5 = new Match(team_3, team_1, date_5, location_3);
+		Match match_6 = new Match(team_3, team_2, date_6, location_3);
+		
+		Match[] matches_set1 = {match_1, match_2, match_3, match_4, match_5, match_6};
+		Match[] matches_set2 = {match_6, match_5, match_4, match_3, match_2, match_1};
+		
+		Chromosome parent1 = new Chromosome(matches_set1);
+		Chromosome parent2 = new Chromosome(matches_set2);
+		
+		Chromosome children[] =GeneticAlgorithm.crossOver(parent1, parent2);
+		Chromosome child1 = children[0];
+		Chromosome child2 = children[1];
+		
+		boolean flagForComparingChromosomes = false;
+		
+		if (!child1.equals(parent1) && !child1.equals(parent2))
+		{
+			if (!child2.equals(parent1) && !child2.equals(parent2) )
+				flagForComparingChromosomes=true;
+		}
+		
+		assertEquals(flagForComparingChromosomes, true);
+	}
+	
+	/*
+	 * Test to check if population size matches with the chromosomes present in the population
+	 */
+    @Test
+    public void checkPopulationSizeTest() 
+    {
+    	Team team_1 = FootballData.getTeams().get(0);
+		Team team_2 = FootballData.getTeams().get(1);
+		Team team_3 = FootballData.getTeams().get(2);
+		
+		String location_1 = FootballData.getLocations().get(0);
+		String location_2 = FootballData.getLocations().get(1);
+		String location_3 = FootballData.getLocations().get(2);
+		
+		Date date_1 = FootballData.getDates().get(0);
+		Date date_2 = FootballData.getDates().get(1);
+		Date date_3 = FootballData.getDates().get(2);
+		Date date_4 = FootballData.getDates().get(3);
+		Date date_5 = FootballData.getDates().get(4);
+		Date date_6 = FootballData.getDates().get(5);
+		
+		Match match_1 = new Match(team_1, team_2, date_1, location_1);
+		Match match_2 = new Match(team_1, team_3, date_2, location_1);
+		Match match_3 = new Match(team_2, team_1, date_3, location_2);
+		Match match_4 = new Match(team_2, team_3, date_4, location_2);
+		Match match_5 = new Match(team_3, team_1, date_5, location_3);
+		Match match_6 = new Match(team_3, team_2, date_6, location_3);
+		
+		Match[] matches = {match_1, match_2, match_3, match_4, match_5, match_6};
+		Chromosome chromosomeToBeAdded = new Chromosome(matches);
+		Chromosome[] chromosomeArray = new Chromosome[]{chromosomeToBeAdded};
+		
+		Population population = new  Population(chromosomeArray, 1);
+		
+		assertEquals(population.getChromosomes().length, chromosomeArray.length);
+        
+    }
 
 }

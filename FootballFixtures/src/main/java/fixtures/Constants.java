@@ -4,8 +4,8 @@
 package main.java.fixtures;
 
 /**
- * @author mitalisalvi
- *
+ * The class contains the genetic algorithm parameters which are used to run the algorithm
+ * @author Aditi Jalkote, Mitali Salvi, Shubham Sharma
  */
 public class Constants 
 {
@@ -15,7 +15,7 @@ public class Constants
 	
 	public static final int ELITE_FACTOR = (int)(0.09 * POPULATION_SIZE);
 	
-	public static final int K_FACTOR = 100;  //keep 5 for population 100
+	public static final int K_FACTOR = 100; 
 	
 	public static final double MUTATION_FACTOR = 0.8;
 	

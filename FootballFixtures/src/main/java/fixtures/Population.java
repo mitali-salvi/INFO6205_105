@@ -4,8 +4,10 @@
 package main.java.fixtures;
 
 /**
- * @author mitalisalvi
- *
+ * The class contains the population on which the genetic algorithm is applied.
+ * In our case, it contains multiple fixtures (chromosome) with varying fitness
+ * 
+ * @author Aditi Jalkote, Mitali Salvi, Shubham Sharma
  */
 public class Population 
 {
@@ -19,7 +21,6 @@ public class Population
 	    {
 	        Chromosome newIndividual = new Chromosome();
 	        chromosomes[i]= newIndividual;
-	        //System.out.println("***************");
 	    }
 	}
 
@@ -29,6 +30,7 @@ public class Population
 		this.chromosomes = new Chromosome[populationSize];
 		System.arraycopy(chromosomes, 0, this.chromosomes, 0, chromosomes.length);
 	}
+
 
 	public Population(Chromosome[] c1 , Chromosome[] c2)
 	{
