@@ -3,6 +3,7 @@ package test.java.fixtures;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import main.java.fixtures.Chromosome;
 import main.java.fixtures.FootballData;
 import main.java.fixtures.GeneticAlgorithm;
+
 import main.java.fixtures.Population;
 import main.java.helper.Match;
 import main.java.helper.Team;
@@ -32,6 +34,7 @@ public class FixturesTest
 	@Before
 	public void setUp() throws Exception
 	{		
+
 		String location_1 = "Etihad stadium";
 		String location_2 = "Anfield";
 		String location_3 = "Wembley stadium";
@@ -39,7 +42,6 @@ public class FixturesTest
 		Team team_1 = new Team("Manchester City","Etihad stadium"); 
 		Team team_2 = new Team("Liverpool","Anfield");
 		Team team_3 = new Team("Tottenham Hotspur","Wembley stadium");
-		
 		
 		FootballData.getLocations().clear();
 		FootballData.locations.add(location_1);
@@ -50,6 +52,7 @@ public class FixturesTest
 		FootballData.teams.add(team_1);
 		FootballData.teams.add(team_2);
 		FootballData.teams.add(team_3);
+
 		
 		Date date_1 = new Date();
 		Date date_2 = new Date();
@@ -70,7 +73,7 @@ public class FixturesTest
 		} catch (Exception e){
 			System.out.println("Excepting for date parsing:" +e.getMessage());
 		}
-		
+
 		FootballData.getDates().addAll(Arrays.asList(date_1, date_2, date_3,
 				date_4, date_5, date_6));
 	}
@@ -95,27 +98,11 @@ public class FixturesTest
 		Date date_4 = FootballData.getDates().get(3);
 		Date date_5 = FootballData.getDates().get(4);
 		Date date_6 = FootballData.getDates().get(5);
-		
-		Match match_1 = new Match(team_1, team_2, date_1, location_1);
-		Match match_2 = new Match(team_1, team_3, date_2, location_1);
-		Match match_3 = new Match(team_2, team_1, date_3, location_2);
-		Match match_4 = new Match(team_2, team_3, date_4, location_2);
-		Match match_5 = new Match(team_3, team_1, date_5, location_3);
-		Match match_6 = new Match(team_3, team_2, date_6, location_3);
-		
-		Population population = new Population(1);
-		Chromosome[] fixtures = population.getChromosomes();
-		Chromosome fixture = fixtures[0];
-		
-		Match[] matches = {match_1, match_2, match_3, match_4, match_5, match_6};
-		fixture.setMatches(matches);
-		
-		int expectedConflicts = 0;
-		double expectedFitness = (double) 1 / (1 + expectedConflicts);
-		fixture.calculateFitness();
-		assertEquals(expectedFitness, fixture.getFitness(), 0.001);
+
+		footballData.getDates().addAll(Arrays.asList(date_1, date_2, date_3,
+				date_4, date_5, date_6));
 	}
-	
+  
 	/*
 	 * Test to check if conflicts arise for clashing fixtures
 	 */
