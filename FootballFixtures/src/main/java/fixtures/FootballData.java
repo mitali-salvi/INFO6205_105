@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package main.java.fixtures;
 
 import java.util.ArrayList;
@@ -9,10 +7,9 @@ import java.util.List;
 
 import main.java.helper.Team;
 
-
 /**
- * @author mitalisalvi
- *
+ * The class contains the data structures which stores all the data related to fixtures.
+ * @author Aditi Jalkote, Mitali Salvi, Shubham Sharma
  */
 public class FootballData 
 {
