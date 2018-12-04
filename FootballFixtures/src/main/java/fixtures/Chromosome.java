@@ -1,17 +1,12 @@
-/**
- * 
- */
+
 package main.java.fixtures;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
@@ -20,16 +15,15 @@ import main.java.helper.Match;
 import main.java.helper.Team;
 
 /**
- * @author mitalisalvi
- *
+ * The class contains functions related to a chromosom including fitness calculation.
+ * @author Aditi Jalkote, Mitali Salvi, Shubham Sharma
  */
 public class Chromosome implements Comparable<Chromosome> {
 	private double fitness = 0.00;
 	private Match[] matches;
 
 	public Chromosome() {
-		int totalNumberOfMatches = ((FootballData.getTeams().size()) * (FootballData.getTeams().size() - 1)) / 2
-				* Constants.NUMBER_OF_ROUNDS;
+		int totalNumberOfMatches = ((FootballData.getTeams().size()) * (FootballData.getTeams().size() - 1)) / 2 * Constants.NUMBER_OF_ROUNDS;
 		matches = new Match[totalNumberOfMatches];
 		generateChromosome();
 		calculateFitness();
@@ -46,10 +40,7 @@ public class Chromosome implements Comparable<Chromosome> {
 			Team randomTeam = FootballData.getTeams().get(random.nextInt(FootballData.getTeams().size()));
 			matches[i] = new Match(randomTeam,
 					FootballData.getTeams().get(random.nextInt(FootballData.getTeams().size())),
-					FootballData.getDates().get(random.nextInt(FootballData.getDates().size())),
-					// FootballData.getLocations().get(random.nextInt(FootballData.getLocations().size())))
-					// ;
-					randomTeam.getHomeStadium());
+					FootballData.getDates().get(random.nextInt(FootballData.getDates().size())), randomTeam.getHomeStadium());
 		}
 	}
 
@@ -62,23 +53,22 @@ public class Chromosome implements Comparable<Chromosome> {
 		 int conflicts = 0;
 		 HashMap<Team, Integer> matchesPlayed = new HashMap<Team, Integer>();
 		
-//		 //each team will play NumberOfRounds(2) against EACH team
-//		 HashMap<String, ArrayList<Team>> hashMapOfTeamAndOpponentCount = new HashMap<String, ArrayList<Team>>();
-//		 for (Team t :FootballData.getTeams()) {
-//			 hashMapOfTeamAndOpponentCount.put(t.getTeamName(), new ArrayList<Team>());
-//		 }
+		 HashMap<String, ArrayList<Team>> hashMapOfTeamAndOpponentCount = new HashMap<String, ArrayList<Team>>();
+		 for (Team t :FootballData.getTeams()) {
+			 hashMapOfTeamAndOpponentCount.put(t.getTeamName(), new ArrayList<Team>());
+		 }
 		// Java 8
 		// Map<String, List<Student>> studlistGrouped = studlist.stream().collect(Collectors.groupingBy(w -> w.stud_location));
 		
 		
-		 //location hashMap - each location (home ground) will have list of all team which have played there
+		 //Each location (home ground) will have matches of all team which have played there
 		 HashMap <String , HashMap<Team, Integer>> locationCount = new HashMap<String , HashMap<Team, Integer>>();
 		 for (String loc:FootballData.getLocations()) {
 			 locationCount.put(loc, new HashMap<Team,Integer>());
 		 }
 		
 		
-		 //A team cant play 2 matches on the same day
+		 //A team can't play 2 matches on the same day
 		 HashMap<Team, ArrayList<Date>> sameDateChecker = new HashMap<Team,
 		 ArrayList<Date>>();
 		 for (Team t:FootballData.getTeams())
@@ -107,25 +97,24 @@ public class Chromosome implements Comparable<Chromosome> {
 			 }
 		
 		
-		 //storing opponents of each team
-//		 for (Entry<String, ArrayList<Team>> entry : hashMapOfTeamAndOpponentCount.entrySet()) 
-//		 {
-//			 String team = entry.getKey();
-//			 if (team.equals(teamA.getTeamName())) {
-//				 ArrayList<Team> al = hashMapOfTeamAndOpponentCount.get(team);
-//				 al.add(teamB);
-//			 }
-//			
-//			 if (team.equals(teamB.getTeamName()) && !(teamA.equals(teamB)) ){
-//				 ArrayList<Team> al = hashMapOfTeamAndOpponentCount.get(team);
-//				 al.add(teamA);
-//			 }
-//		 }
+		 //Storing opponents of each team
+		 for (Entry<String, ArrayList<Team>> entry : hashMapOfTeamAndOpponentCount.entrySet()) 
+		 {
+			 String team = entry.getKey();
+			 if (team.equals(teamA.getTeamName())) {
+				 ArrayList<Team> al = hashMapOfTeamAndOpponentCount.get(team);
+				 al.add(teamB);
+			 }
+			
+			 if (team.equals(teamB.getTeamName()) && !(teamA.equals(teamB)) ){
+				 ArrayList<Team> al = hashMapOfTeamAndOpponentCount.get(team);
+				 al.add(teamA);
+			 }
+		 }
 		
 		
 		 //1. Team will not play with itself
 		 if(teamA == teamB){
-			 //System.out.println("Team will not play with itself");
 			 conflicts++;
 		 }
 		
@@ -135,19 +124,16 @@ public class Chromosome implements Comparable<Chromosome> {
 			 if (matchSchedule.getMatchDate().compareTo(matches[j].getMatchDate())==0)
 			 {
 				 if (matchSchedule.getMatchLocation().equalsIgnoreCase(matches[j].getMatchLocation())) {
-					 //System.out.println("Two matches cannot take place on the same day and same location");
 					 conflicts++;
 				 }
 			 }
 		 }
 		
-		 //each team will play one match at home and one match at opponent ground
+		 //Each team will play one match at home and one match at opponent ground
 		 //equivalent to each location will have 2 home ground matches and each other team will play one match each at that ground
-		 //here we assume 2 rounds
 		 String currentLocation = matchSchedule.getMatchLocation();
 		
 		 HashMap<Team,Integer> locHashMap =locationCount.get(currentLocation);
-		 //add to locHashMap if location is either teams home ground. If not then increase conflicts
 		 if (currentLocation.equals(teamA.getHomeStadium()) ||currentLocation.equals(teamB.getHomeStadium()))
 		 {
 			 if (locHashMap.containsKey(teamA))
@@ -160,10 +146,8 @@ public class Chromosome implements Comparable<Chromosome> {
 			 else
 				 locHashMap.put(teamB, 1);
 		 }
-		 else{
-			 //System.out.println("location doesnt match either team home stadiums so increase conflicts");
+		 else
 			 conflicts++;
-		 }
 		
 		 ArrayList<Date> dateForTeamA = sameDateChecker.get(teamA);
 		 dateForTeamA.add(matchSchedule.getMatchDate());
@@ -175,11 +159,7 @@ public class Chromosome implements Comparable<Chromosome> {
 			 dateForTeamB.add(matchSchedule.getMatchDate());
 			 sameDateChecker.put(teamB, dateForTeamB);
 		 }
-		
-		
-//		 if (!matchSchedule.getMatchLocation().equals(teamA.getHomeStadium()) || !matchSchedule.getMatchLocation().equals(teamB.getHomeStadium()))
-//			 conflicts++;
-		 
+
 		 
 		 }
 		 
@@ -188,7 +168,6 @@ public class Chromosome implements Comparable<Chromosome> {
 		 {
 			 boolean flag = containsDuplicates(entry.getValue());
 			 if (flag) {
-				 //System.out.println("more than 1 motch occurs on the same day for team::"+entry.getKey().getTeamName());
 				 conflicts++;
 			 }
 		
@@ -197,20 +176,11 @@ public class Chromosome implements Comparable<Chromosome> {
 		for (Entry<String, HashMap<Team, Integer>> entry : locationCount.entrySet()) 
 		{
 			String currentLoc = entry.getKey();
-			//System.out.println("currentLoc:"+currentLoc);
 			HashMap<Team,Integer> locHashMap = locationCount.get(currentLoc);
-			//System.out.println(locHashMap);
-			//System.out.println();
-//			if (locHashMap.size() != FootballData.getTeams().size()) {
-//				//System.out.println("Each team has not played at this location");
-//				conflicts++;
-//			}
 			for (Entry<Team ,Integer> temp : locHashMap.entrySet())
 			{
 				if (temp.getKey().getHomeStadium().equals(currentLoc)) {
-					//System.out.println("home ground  for::"+temp.getKey().getTeamName());
 					if (temp.getValue() != (FootballData.getTeams().size() - 1)){
-						//System.out.println("Home team has not played[FootballData.getTeams().size() - 1] games here");
 						conflicts++;
 					}
 				}
@@ -223,90 +193,64 @@ public class Chromosome implements Comparable<Chromosome> {
 			 int numberOfMatches = entry.getValue();
 			 if (numberOfMatches != ((FootballData.getTeams().size() - 1) * Constants.NUMBER_OF_ROUNDS))
 			 {
-				 //System.out.println(entry.getKey().getTeamName()+" is NOT playing -  "+(FootballData.getTeams().size() - 1) * Constants.NUMBER_OF_ROUNDS+" +"matches");
 				 conflicts++;
 				 break;
 			 }
 		 }
 		
 		
-		 //System.out.println();
-		 //each team will play 2 (number of rounds) against every other team
-//		 for (Entry<String, ArrayList<Team>> entry : hashMapOfTeamAndOpponentCount.entrySet())
-//		 {
-//		 ArrayList<Team> temp = entry.getValue();
-//		 String team = entry.getKey();
-//		 HashMap <String, Integer> countOfMatchesPlayed = new HashMap<>();
-//		 for (Team t :temp)
-//		 {
-//		 if(countOfMatchesPlayed.containsKey(t.getTeamName()))
-//		 {
-//		 countOfMatchesPlayed.put(t.getTeamName(),
-//		 countOfMatchesPlayed.get(t.getTeamName()) + 1);
-//		 }
-//		 else{
-//		 countOfMatchesPlayed.put(t.getTeamName(), 1);
-//		 }
-//		 }
-//		 //System.out.println("Executing for:::"+team);
-//		 //System.out.println("countOfMatchesPlayed::"+countOfMatchesPlayed);
-//		 for (Entry<String, Integer> single : countOfMatchesPlayed.entrySet())
-//		 {
-//		 String opponentTeam = single.getKey();
-//		 int numberOfMatchesBetween = single.getValue();
-//		 if (team.equals(opponentTeam))
-//		 {
-//		 //System.out.println("Already taken care of in loop so ignore");
-//		 }
-//		 else
-//		 {
-//		 if (numberOfMatchesBetween != Constants.NUMBER_OF_ROUNDS)
-//		 {
-//		 //System.out.println("Two matches are not played between:"+team+" and "+opponentTeam);
-//		 conflicts++;
-//		 }
-//		 }
-//		 }
-//		
-//		 //checking if this team has played matches against EACH other team in the league
-//		 HashMap <String, Integer> copyOfCountOfMatchesPlayed = new
-//		 HashMap<>(countOfMatchesPlayed);
-//		 int counterOfOpponentTeam = 0;
-//		 for (Entry<String, Integer> single :
-//		 copyOfCountOfMatchesPlayed.entrySet())
-//		 {
-//		 String opponentTeam = single.getKey();
-//		 if (!team.equals(opponentTeam))
-//		 {
-//		 counterOfOpponentTeam ++;
-//		 }
-//		 }
-//		 //System.out.println("counterOfOpponentTeamL"+counterOfOpponentTeam);
-//		 if (counterOfOpponentTeam != FootballData.getTeams().size() -1)
-//		 {
-//		 //System.out.println("After removing own entry count is less");
-//		 conflicts++;
-//		 }
-//		 }
+		 //Each team will play 2 (number of rounds) against every other team
+		 for (Entry<String, ArrayList<Team>> entry : hashMapOfTeamAndOpponentCount.entrySet())
+		 {
+		 ArrayList<Team> temp = entry.getValue();
+		 String team = entry.getKey();
+		 HashMap <String, Integer> countOfMatchesPlayed = new HashMap<>();
+		 for (Team t :temp)
+		 {
+			 if(countOfMatchesPlayed.containsKey(t.getTeamName()))
+			 {
+				 countOfMatchesPlayed.put(t.getTeamName(),countOfMatchesPlayed.get(t.getTeamName()) + 1);
+			 }
+			 else{
+				 countOfMatchesPlayed.put(t.getTeamName(), 1);
+			 }
+		 }
+		 for (Entry<String, Integer> single : countOfMatchesPlayed.entrySet())
+		 {
+			 String opponentTeam = single.getKey();
+			 int numberOfMatchesBetween = single.getValue();
+			 if (team.equals(opponentTeam)) {
+			 }
+			 else
+			 {
+				 if (numberOfMatchesBetween != Constants.NUMBER_OF_ROUNDS){
+					 conflicts++;
+				 }
+			 }
+		 }
 		
-		 System.out.println("conflicts::"+conflicts);
+		 //Checking if this team has played matches against EACH other team in the league
+		 HashMap <String, Integer> copyOfCountOfMatchesPlayed = new
+		 HashMap<>(countOfMatchesPlayed);
+		 int counterOfOpponentTeam = 0;
+		 for (Entry<String, Integer> single :
+		 copyOfCountOfMatchesPlayed.entrySet())
+		 {
+		 String opponentTeam = single.getKey();
+		 if (!team.equals(opponentTeam)) {
+		 counterOfOpponentTeam ++;
+		 }
+		 }
+		 if (counterOfOpponentTeam != FootballData.getTeams().size() -1) {
+		 conflicts++;
+		 }
+		 }
+		
 		 double fitness = 1/(double)(1+conflicts);
-		 fitness = BigDecimal.valueOf(fitness).setScale(3,
-		 RoundingMode.HALF_UP).doubleValue();
+		 fitness = BigDecimal.valueOf(fitness).setScale(3, RoundingMode.HALF_UP).doubleValue();
 		 setFitness(fitness);
-		 System.out.println("fitness::"+fitness);
-		 //System.out.println();
-		 //System.out.println();
-		
-		
+		 //System.out.println("fitness::"+fitness);
 
-		// return (double) 1 / (1 + conflicts);
-		// System.out.println("conflicts::"+conflicts);
-		fitness = 1 / (double) (1 + conflicts);
-		// fitness = BigDecimal.valueOf(fitness).setScale(3,
-		// RoundingMode.HALF_UP).doubleValue();
-		setFitness(fitness);
-		// System.out.println("fitness::"+fitness);
 	}
 
 	/**
@@ -321,8 +265,6 @@ public class Chromosome implements Comparable<Chromosome> {
 	 *            the fitness to set
 	 */
 	public void setFitness(double fitness) {
-		// fitness = BigDecimal.valueOf(fitness).setScale(3,
-		// RoundingMode.HALF_UP).doubleValue();;
 		this.fitness = fitness;
 	}
 

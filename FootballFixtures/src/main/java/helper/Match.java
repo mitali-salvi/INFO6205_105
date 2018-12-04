@@ -2,6 +2,12 @@ package main.java.helper;
 
 import java.util.Date;
 
+/**
+ * The class contains the layout of a Gene. A match is a fixture which forms a schedule (chromosome).
+ * The match contains both teams, match date and the location.
+ * 
+ * @author Aditi Jalkote, Mitali Salvi, Shubham Sharma
+ */
 public class Match 
 {
 	private Team teamA;
@@ -84,9 +90,60 @@ public class Match
 	 */
 	@Override
 	public String toString() {
-		return "Match [teamA=" + teamA.toString() + ", teamB=" + teamB.toString() + ", matchDate=" + matchDate + ", matchLocation="
-				+ matchLocation + "]";
+		return "Match: " + teamA.toString() + " vs " + teamB.toString() + " on " + matchDate + "  @ "
+				+ matchLocation;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((matchDate == null) ? 0 : matchDate.hashCode());
+		result = prime * result + ((matchLocation == null) ? 0 : matchLocation.hashCode());
+		result = prime * result + ((teamA == null) ? 0 : teamA.hashCode());
+		result = prime * result + ((teamB == null) ? 0 : teamB.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Match other = (Match) obj;
+		if (matchDate == null) {
+			if (other.matchDate != null)
+				return false;
+		} else if (!matchDate.equals(other.matchDate))
+			return false;
+		if (matchLocation == null) {
+			if (other.matchLocation != null)
+				return false;
+		} else if (!matchLocation.equals(other.matchLocation))
+			return false;
+		if (teamA == null) {
+			if (other.teamA != null)
+				return false;
+		} else if (!teamA.equals(other.teamA))
+			return false;
+		if (teamB == null) {
+			if (other.teamB != null)
+				return false;
+		} else if (!teamB.equals(other.teamB))
+			return false;
+		return true;
+	}
+	
+	
 	
 
 	
