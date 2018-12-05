@@ -3,7 +3,7 @@ package main.java.fixtures;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
+import java.util.concurrent.TimeUnit;
 import main.java.helper.Match;
 
 /**
@@ -82,10 +82,15 @@ public class FixturesMain {
 		Population nextGen;
 
 		int maxGeneration = Constants.MAX_GENERATION;
-
+		double startTime=System.nanoTime();
+		double timeInNano=0.0;
+		long timeInMilliToGetSolution =0;
+		
 		do {
+      
 			nextGen = GeneticAlgorithm.runGeneticAlgorithm(population);
 			maxGeneration--;
+
 			if (GeneticAlgorithm.getFlag() == true) {
 				break;
 			}
@@ -98,6 +103,9 @@ public class FixturesMain {
 
 			if (temp[i].getFitness() == 1.0) {
 
+        timeInNano = (System.nanoTime() - startTime)/* Math.pow(10, -6) */;
+        timeInMilliToGetSolution = TimeUnit.MILLISECONDS.convert((long) timeInNano, TimeUnit.NANOSECONDS);
+        
 				Match[] h = temp[i].getMatches();
 				for (int j = 0; j < h.length; j++) {
 
@@ -107,6 +115,8 @@ public class FixturesMain {
 			}
 		}
 
+    System.out.println("timeInMilliToGetSolution:"+timeInMilliToGetSolution);
+    
 		System.out.println("Done implementing GA");
 
 	}
