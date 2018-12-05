@@ -5,10 +5,11 @@
 ### Problem Description
 Here we are drawing Football fixture (EPL Fixtures) using Genetic Algorithm. Genetic Algorithm is a method of solving optimisation problem inspired by natural selection where fittest  individual are selected for mating in order to produce healthy new generation. <br/>
 Operators in Genetic Algorithm <br/>
-* Initial population <br/>
-* Fitness function <br/>
-* SelectionCrossover <br/>
-* Mutation <br/><br/>
+* Initial Population <br/>
+* Fitness Function <br/>
+* Selection <br/>
+* Crossover <br/>
+* Mutation <br/>
 While scheduling following schedule Following criteria are being satisfied: <br/>
 * A team cannot play with itself <br/>
 * Each team plays exactly 2(I.e. number of rounds) matches against each team in the league <br/>
