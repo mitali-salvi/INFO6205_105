@@ -9,7 +9,7 @@ Operators in Genetic Algorithm <br/>
 * Fitness Function <br/>
 * Selection <br/>
 * Crossover <br/>
-* Mutation <br/>
+* Mutation <br/> <br/>
 While scheduling following schedule Following criteria are being satisfied: <br/>
 * A team cannot play with itself <br/>
 * Each team plays exactly 2(I.e. number of rounds) matches against each team in the league <br/>
