@@ -3,7 +3,7 @@
  Team Members : Aditi Jalkote, Mitali Salvi, Shubham Sharma <br/>
 
 ### Problem Description
-Markup : Here we are drawing Football fixture (EPL Fixtures) using Genetic Algorithm. Genetic Algorithm is a method of solving optimisation problem inspired by natural selection where fittest  individual are selected for mating in order to produce healthy new generation. <br/>
+Here we are drawing Football fixture (EPL Fixtures) using Genetic Algorithm. Genetic Algorithm is a method of solving optimisation problem inspired by natural selection where fittest  individual are selected for mating in order to produce healthy new generation. <br/>
 Operators in Genetic Algorithm <br/>
 * Initial population <br/>
 * Fitness function <br/>
@@ -17,5 +17,5 @@ While scheduling following schedule Following criteria are being satisfied: <br/
 * Two matches cannot take place on the same day and same location <br/>
 * A team cannot play 2 matches on the same day <br/>
 
-How to run the program <br/>
+### How to run the program <br/>
 Project source code in the project/src folder. <br/>
