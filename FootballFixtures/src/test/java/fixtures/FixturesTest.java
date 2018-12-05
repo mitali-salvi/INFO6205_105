@@ -101,6 +101,22 @@ public class FixturesTest
 
 		FootballData.getDates().addAll(Arrays.asList(date_1, date_2, date_3,
 				date_4, date_5, date_6));
+		
+		
+		Match match_1 = new Match(team_1, team_2, date_1, location_1);
+		Match match_2 = new Match(team_1, team_2, date_2, location_2);
+		Match match_3 = new Match(team_1, team_3, date_3, location_1);
+		Match match_4 = new Match(team_1, team_3, date_4, location_3);
+		Match match_5 = new Match(team_2, team_3, date_5, location_2);
+		Match match_6 = new Match(team_2, team_3, date_6, location_3);
+		
+		Match[] matches = {match_1, match_2, match_3, match_4, match_5, match_6};
+		Chromosome chromosome = new Chromosome(matches);
+		
+		double expectedFitness = 1.00;
+		chromosome.calculateFitness();
+		double calculatedFitness = chromosome.getFitness();
+		assertTrue(Double.compare(expectedFitness, calculatedFitness) ==0);
 	}
   
 	/*
