@@ -200,7 +200,8 @@ public class GeneticAlgorithm
 		
 		for (int i=0; i< Constants.K_FACTOR ;i++)
 		{
-			position =  random.nextInt(chromosomes.length-minVal) + minVal;
+			//System.out.println("length:" +chromosomes.length);
+			position =  random.nextInt(chromosomes.length - minVal) + minVal;
 			tournaments.put(position, chromosomes[position]);
 		}
 		
