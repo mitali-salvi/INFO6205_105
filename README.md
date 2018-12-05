@@ -1,6 +1,6 @@
 # Football Fixtures (EPL Fixtures) Using Genetic Algorithms - Team 105 <br/>
-# Final Project - Program Structures and Algorithms ( INFO 6205 ) <br/>
-# Team Members : Aditi Jalkote, Mitali Salvi, Shubham Sharma <br/>
+ Final Project - Program Structures and Algorithms ( INFO 6205 ) <br/>
+ Team Members : Aditi Jalkote, Mitali Salvi, Shubham Sharma <br/>
 
 Problem Description
 Here we are drawing Football fixture (EPL Fixtures) using Genetic Algorithm. Genetic Algorithm is a method of solving optimisation problem inspired by natural selection where fittest  individual are selected for mating in order to produce healthy new generation. <br/>
