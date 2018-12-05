@@ -1,6 +1,11 @@
 
 package main.java.fixtures;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -15,12 +20,18 @@ import main.java.helper.Match;
 
 public class FixturesMain {
 
+	static double startTime;
+	static double timeInNano = 0.0;
+	static long timeInMilliToGetSolution = 0;
+
 	public static void main(String[] args) {
 
 		Configuration.initializeData();
-		
+
+		startTime = System.nanoTime();
+
 		Population population = runAlgorithm(0, Constants.POPULATION_SIZE);
-		
+
 		evaluateAlgorithm(population);
 
 	}
@@ -82,12 +93,9 @@ public class FixturesMain {
 		Population nextGen;
 
 		int maxGeneration = Constants.MAX_GENERATION;
-		double startTime=System.nanoTime();
-		double timeInNano=0.0;
-		long timeInMilliToGetSolution =0;
-		
+
 		do {
-      
+
 			nextGen = GeneticAlgorithm.runGeneticAlgorithm(population);
 			maxGeneration--;
 
@@ -99,25 +107,66 @@ public class FixturesMain {
 
 		Chromosome[] temp = population.getChromosomes();
 
+		boolean flag = false;
+
 		for (int i = 0; i < temp.length; i++) {
 
 			if (temp[i].getFitness() == 1.0) {
+				flag = true;
 
-        timeInNano = (System.nanoTime() - startTime)/* Math.pow(10, -6) */;
-        timeInMilliToGetSolution = TimeUnit.MILLISECONDS.convert((long) timeInNano, TimeUnit.NANOSECONDS);
-        
-				Match[] h = temp[i].getMatches();
-				for (int j = 0; j < h.length; j++) {
+				displaySchedule(temp[i], true);
 
-					System.out.println(h[j]);
-				}
 				break;
 			}
 		}
 
-    System.out.println("timeInMilliToGetSolution:"+timeInMilliToGetSolution);
-    
+		if (!flag) {
+			
+			double maxFitness = -1;
+			int position = 0;
+			// display chromosome with highest fitness
+			for (int i = 0; i < temp.length; i++) {
+				if (temp[i].getFitness() > maxFitness) {
+					maxFitness = temp[i].getFitness();
+					position = i;
+				}
+			}
+			displaySchedule(temp[position], false);
+
+		}
+
+		System.out.println();
+		System.out.println("timeInMilli_To_GetSolution:" + timeInMilliToGetSolution);
+
 		System.out.println("Done implementing GA");
+
+	}
+
+	private static void displaySchedule(Chromosome chromosome, boolean bestSol) {
+
+		timeInNano = (System.nanoTime() - startTime);
+		timeInMilliToGetSolution = TimeUnit.MILLISECONDS.convert((long) timeInNano, TimeUnit.NANOSECONDS);
+		// sort schedule by date
+		List<Match> al = new ArrayList<Match>(Arrays.asList(chromosome.getMatches()));
+		Collections.sort(al, new Comparator<Match>() {
+			public int compare(Match m1, Match m2) {
+				return m1.getMatchDate().compareTo(m2.getMatchDate());
+			}
+		});
+		
+		if(bestSol){
+			System.out.println("Best Schedule: ");
+			System.out.println("Fitness: " + chromosome.getFitness());
+			
+		} else {
+			System.out.println("Optimal Solution: ");
+		} 
+
+		System.out.println("Date\t\t\t\t|\tHome Team\t\t\t|\tOpponent Team\t\t|\tLocation");
+		for (Match m : al) {
+			System.out.println(m.getMatchDate() + "\t|\t" + m.getTeamA() + "\t\t\t|\t" + m.getTeamB() + "\t\t|\t"
+					+ m.getMatchLocation());
+		}
 
 	}
 
