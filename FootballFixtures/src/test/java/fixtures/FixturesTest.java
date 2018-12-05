@@ -99,7 +99,7 @@ public class FixturesTest
 		Date date_5 = FootballData.getDates().get(4);
 		Date date_6 = FootballData.getDates().get(5);
 
-		footballData.getDates().addAll(Arrays.asList(date_1, date_2, date_3,
+		FootballData.getDates().addAll(Arrays.asList(date_1, date_2, date_3,
 				date_4, date_5, date_6));
 	}
   
