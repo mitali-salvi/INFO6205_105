@@ -10,7 +10,7 @@ Operators in Genetic Algorithm <br/>
 * Selection <br/>
 * Crossover <br/>
 * Mutation <br/> <br/>
-While scheduling following schedule Following criteria are being satisfied: <br/>
+While scheduling fixtures Following criteria are being satisfied: <br/>
 * A team cannot play with itself <br/>
 * Each team plays exactly 2(I.e. number of rounds) matches against each team in the league <br/>
 * Each team plays [total number of matches – number of rounds] matches in the league <br/>
@@ -18,5 +18,9 @@ While scheduling following schedule Following criteria are being satisfied: <br/
 * Two matches cannot take place on the same day and same location <br/>
 * A team cannot play 2 matches on the same day <br/>
 
+####  Parallel processing is done in project to initialize initital population.
+
+
 ### How to run the program <br/>
-Project source code in the project/src folder. <br/>
+* Run FixturesMain.java to run the algorithm with multithreading 
+* Build the application with the test cases provided
