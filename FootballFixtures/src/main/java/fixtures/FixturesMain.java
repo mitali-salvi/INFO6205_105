@@ -96,6 +96,7 @@ public class FixturesMain {
 
 		do {
 
+			//System.out.println("maxGeneration:"+maxGeneration);
 			nextGen = GeneticAlgorithm.runGeneticAlgorithm(population);
 			maxGeneration--;
 
@@ -136,12 +137,19 @@ public class FixturesMain {
 		}
 
 		System.out.println();
-		System.out.println("timeInMilli_To_GetSolution:" + timeInMilliToGetSolution);
+		System.out.println("Time in milliseconds to get solution: " + timeInMilliToGetSolution);
 
 		System.out.println("Done implementing GA");
 
 	}
 
+	/**
+	 * Function displays the football fixture
+	 * 
+	 * @param chromosome which has the best or optimal solution
+	 * @param perfect solution or optimal solution
+	 * @return void
+	 */
 	private static void displaySchedule(Chromosome chromosome, boolean bestSol) {
 
 		timeInNano = (System.nanoTime() - startTime);
@@ -162,10 +170,16 @@ public class FixturesMain {
 			System.out.println("Optimal Solution: ");
 		} 
 
-		System.out.println("Date\t\t\t\t|\tHome Team\t\t\t|\tOpponent Team\t\t|\tLocation");
-		for (Match m : al) {
-			System.out.println(m.getMatchDate() + "\t|\t" + m.getTeamA() + "\t\t\t|\t" + m.getTeamB() + "\t\t|\t"
-					+ m.getMatchLocation());
+//		System.out.println("Date\t\t\t\t|\tHome Team\t\t\t|\tOpponent Team\t\t|\tLocation");
+		System.out.format(String.format("%30s%25s%25s%25s\r","Match date", "Home Team","Opponent Team","Match location"));
+		System.out.println();
+
+		for (Match m : al) 
+		{
+//			System.out.println(m.getMatchDate() + "\t|\t" + m.getTeamA() + "\t\t\t|\t" + m.getTeamB() + "\t\t|\t"
+//					+ m.getMatchLocation());
+			System.out.format(String.format("%30s%25s%25s%25s\n",m.getMatchDate(),m.getTeamA(), m.getTeamB(), m.getMatchLocation()));
+
 		}
 
 	}

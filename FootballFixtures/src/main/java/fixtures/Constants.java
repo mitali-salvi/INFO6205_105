@@ -21,7 +21,7 @@ public class Constants
 	
 	public static final double CROSSOVER_RATE = 0.8;
 	
-	public static final int MAX_GENERATION = 100;
+	public static final int MAX_GENERATION = 1000;
 
 	public static final int MAX_COLONY_SIZE = 500;
 }
