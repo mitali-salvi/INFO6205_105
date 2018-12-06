@@ -22,5 +22,5 @@ While scheduling fixtures Following criteria are being satisfied: <br/>
 
 
 ### How to run the program <br/>
-* Run FixturesMain.java to run the algorithm with multithreading 
-* Build the application with the test cases provided
+* Run FixturesMain.java to run the algorithm with  
+* Build the application with the test cases provided in FixturesTest.java
